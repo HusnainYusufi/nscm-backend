@@ -1,33 +1,17 @@
 const Role = require('../model/Role.model');
-const Redis = require('../../../config/redis');
 
-
-
-class RoleRepository{
-
-    static async create(data){
-        
+class RoleRepository {
+    static async create(data) {
         return await Role.create(data);
-     
-
-    }
-    static async update(data) {
-
-
-    }   
-    // static async get()
-    static async getById(data){
-
-
     }
 
-    static async getByName(data){
-       return await Role.findOne({name : data}).exec();
-    }
-    static async delete(data){
-
+    static async getByName(name) {
+        return await Role.findOne({ name }).exec();
     }
 
+    static async getAll() {
+        return await Role.find({}).exec();
+    }
 }
 
 module.exports = RoleRepository;

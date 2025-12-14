@@ -27,6 +27,15 @@ class RoleService{
 
     }
 
+    static async getAllRoles(){
+        try {
+            const roles = await RoleRepo.getAll();
+            return { status: 200, message: "Record Found", result: roles };
+        } catch (error) {
+            throw error;
+        }
+    }
+
 
 }
 
