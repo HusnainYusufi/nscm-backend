@@ -31,6 +31,27 @@ class ProjectService {
         if (foundAssemblies.length !== uniqueAssemblyIds.length) {
           return { status: 400, message: 'One or more assemblies are invalid', result: null };
         }
+
+        const assembliesMap = new Map(foundAssemblies.map((assembly) => [String(assembly._id), assembly]));
+        for (const set of sets) {
+          if (!Array.isArray(set.assemblies) || !set.assemblies.length) continue;
+
+          const setAssembliesAsStrings = set.assemblies.map(String);
+          for (const assemblyId of setAssembliesAsStrings) {
+            const assembly = assembliesMap.get(assemblyId);
+
+            if (assembly?.type === 'sub-assembly') {
+              const parentAssemblyId = assembly.parentAssembly ? String(assembly.parentAssembly) : null;
+              if (!parentAssemblyId || !setAssembliesAsStrings.includes(parentAssemblyId)) {
+                return {
+                  status: 400,
+                  message: `Sub-assembly "${assembly.name}" must reference a valid parent assembly within the same set`,
+                  result: null
+                };
+              }
+            }
+          }
+        }
       }
 
       if (structures.length) {

@@ -28,7 +28,19 @@
         "method": "POST",
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "url": { "raw": "{{baseUrl}}/assembly/add", "host": ["{{baseUrl}}"], "path": ["assembly", "add"] },
-        "body": { "mode": "raw", "raw": "{\n  \"name\": \"HVAC Kit\",\n  \"type\": \"kit\",\n  \"notes\": \"Cooling package\"\n}" }
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"HVAC Assembly\",\n  \"type\": \"assembly\",\n  \"notes\": \"Cooling package\"\n}" }
+      }
+    },
+    {
+      "name": "Assembly - Add Sub Assembly",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/assembly/add", "host": ["{{baseUrl}}"], "path": ["assembly", "add"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"HVAC Ducting\",\n  \"type\": \"sub-assembly\",\n  \"parentAssembly\": \"{{assemblyId}}\",\n  \"notes\": \"Ducting package\"\n}"
+        }
       }
     },
     {
@@ -56,7 +68,7 @@
         "url": { "raw": "{{baseUrl}}/project/add", "host": ["{{baseUrl}}"], "path": ["project", "add"] },
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"name\": \"Cardiology Wing\",\n  \"code\": \"PRJ-001\",\n  \"category\": \"{{categoryId}}\",\n  \"type\": \"special\",\n  \"shortDescription\": \"Wing expansion project\",\n  \"sets\": [\n    {\n      \"name\": \"Mechanical Set\",\n      \"description\": \"Mechanical components\",\n      \"materialSpecs\": \"Standard\",\n      \"assemblies\": [\"{{assemblyId}}\"]\n    }\n  ],\n  \"structures\": [\"{{structureId}}\"]\n}"
+          "raw": "{\n  \"name\": \"Cardiology Wing\",\n  \"code\": \"PRJ-001\",\n  \"category\": \"{{categoryId}}\",\n  \"type\": \"special\",\n  \"shortDescription\": \"Wing expansion project\",\n  \"sets\": [\n    {\n      \"name\": \"Mechanical Set\",\n      \"description\": \"Mechanical components\",\n      \"materialSpecs\": \"Standard\",\n      \"assemblies\": [\"{{assemblyId}}\", \"{{subAssemblyId}}\"]\n    }\n  ],\n  \"structures\": [\"{{structureId}}\"]\n}"
         }
       }
     },
@@ -69,6 +81,7 @@
     { "key": "baseUrl", "value": "http://localhost:3000" },
     { "key": "categoryId", "value": "" },
     { "key": "assemblyId", "value": "" },
+    { "key": "subAssemblyId", "value": "" },
     { "key": "structureId", "value": "" }
   ]
 }
