@@ -1,0 +1,58 @@
+{
+  "info": {
+    "_postman_id": "6f3b0b1a-29f3-4b0d-9bf8-3a9d8c4b9379",
+    "name": "Order Item Attachments",
+    "description": "Attach missing SKUs or bundles to an existing order. Requires admin or CSR token.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Attach SKUs or Bundles to Order",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "type": "text",
+            "value": "Bearer {{authToken}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"items\": [\n    { \"sku\": \"SKU-123\", \"quantity\": 2, \"type\": \"SKU\" },\n    { \"sku\": \"BUNDLE-ABC\", \"quantity\": 1, \"type\": \"BUNDLE\" }\n  ]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/orders/{{orderNo}}/items/attach",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "orders",
+            "{{orderNo}}",
+            "items",
+            "attach"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "orderNo",
+      "value": "ORDER-001"
+    },
+    {
+      "key": "authToken",
+      "value": "<jwt-token>"
+    }
+  ]
+}
