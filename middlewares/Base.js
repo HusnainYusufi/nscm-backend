@@ -1,8 +1,7 @@
-'use strict';
+"use strict";
 
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser'); // Ensure cookieParser is imported correctly
-const express = require('express');
+const cookieParser = require('cookie-parser');
 const rateLimit = require('express-rate-limit');
 const { httpsCodes } = require('../modules/constants');
 const { language } = require('../language/language');
@@ -63,6 +62,8 @@ class Base {
 
         app.use('/auth/login', loginLimiter);
         app.use('/auth/register', registerLimiter);
+        app.use('/auth/signup', registerLimiter);
+        app.use('/auth/signup/admin', registerLimiter);
         app.use('/auth/verify/otp', otpLimiter);
         app.use(['/auth/accept-invite', '/auth/reset-password', '/auth/forgotPassword', '/auth/verifyToken'], publicLimiter);
 
@@ -76,6 +77,8 @@ class Base {
             path: [
                 { url: "/auth/login", methods: ['GET', 'PUT', 'POST'] },
                 { url: "/auth/register", methods: ['GET', 'PUT', 'POST'] },
+                { url: "/auth/signup", methods: ['GET', 'PUT', 'POST'] },
+                { url: "/auth/signup/admin", methods: ['GET', 'PUT', 'POST'] },
                 { url: "/auth/verify/otp", methods: ['GET', 'PUT', 'POST'] },
                 { url: "/auth/accept-invite", methods: ['GET', 'POST'] },
                 { url: "/warehouse/add", methods: ['GET', 'PUT', 'POST'] },
@@ -87,6 +90,7 @@ class Base {
                 { url: /^\/orders\/[^/]+\/customer-tracking$/, methods: ['GET'] },
                 { url: "/role/all", methods: ['GET', 'PUT', 'POST'] },
                 { url: "/role/add", methods: ['GET', 'PUT', 'POST'] },
+                { url: "/user/add", methods: ['GET', 'PUT', 'POST'] },
                 { url: "/user/add/password", methods: ['GET', 'PUT', 'POST'] },
                 { url: new RegExp('^/getFiles/.*'), methods: ['GET', 'PUT', 'POST'] },
                 // ------------- PUBLIC TRACKING -------------
