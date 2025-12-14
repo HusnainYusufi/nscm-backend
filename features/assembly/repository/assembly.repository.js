@@ -5,12 +5,16 @@ class AssemblyRepository {
     return await Assembly.create(data);
   }
 
+  static async findById(id) {
+    return await Assembly.findById(id).exec();
+  }
+
   static async findByIds(ids) {
     return await Assembly.find({ _id: { $in: ids } }).exec();
   }
 
   static async getAll() {
-    return await Assembly.find({}).exec();
+    return await Assembly.find({}).populate('parentAssembly').exec();
   }
 }
 
